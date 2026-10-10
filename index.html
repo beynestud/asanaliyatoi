@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Асан & Алия - Тойға шақыру</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-light: #f9f5ea;
+            --dark: #2c2c2c;
+            --gray: #666666;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+            --accent: #b8860b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            background-color: #f4f4f4;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Music Player Floating Button */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+        }
+
+        .music-btn.playing {
+            animation: pulseMusic 2s infinite;
+        }
+
+        @keyframes pulseMusic {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .music-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section with Zoom Effect */
+        .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            animation: slowZoom 15s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.12); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .hero-names {
+            font-size: 4rem;
+            margin: 15px 0;
+            color: #f7e7ce;
+            line-height: 1.1;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+            padding: 8px 25px;
+            display: inline-block;
+        }
+
+        /* Sections General */
+        .section {
+            padding: 55px 25px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '♦';
+            display: block;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 5px;
+        }
+
+        /* Invitation Text */
+        .invitation-text {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .parents-block {
+            background-color: var(--primary-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px dashed var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .parents-block:hover {
+            transform: scale(1.02);
+        }
+
+        /* Date & Timer */
+        .date-display {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 20px 0;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .timer-item {
+            background: var(--primary-light);
+            padding: 15px 8px;
+            border-radius: 12px;
+            min-width: 70px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .timer-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .timer-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        /* Schedule Timeline */
+        .timeline {
+            position: relative;
+            margin: 30px 0 10px;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -17px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.4);
+            background: var(--accent);
+        }
+
+        .timeline-time {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .timeline-desc {
+            font-size: 1.05rem;
+            color: var(--dark);
+        }
+
+        /* Location Card */
+        .venue-card {
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 20px;
+            border: 1px solid #eaeaea;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .venue-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .venue-name {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .venue-address {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons with Animation */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(212, 175, 55, 0.35);
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.45);
+        }
+
+        .btn-secondary {
+            background: #25D366; /* WhatsApp color */
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #1eb956;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.45);
+        }
+
+        /* Dresscode */
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .color-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* RSVP Form */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #fcfcfc;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            background: var(--white);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        footer {
+            padding: 35px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #aaa;
+            background: var(--light-gray);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music Audio Element -->
+    <audio id="bgMusic" loop preload="auto">
+        <!-- Kazakh traditional dombyra / wedding instrumental -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/05/audio_6861219b66.mp3?filename=kazakh-dombra-instrumental.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Music Toggle Button -->
+    <button class="music-btn" id="musicToggleBtn" onclick="toggleMusic()" title="Музыканы қосу/өшіру">
+        <span class="music-icon" id="musicIcon">🎵</span>
+    </button>
+
+    <div class="container">
+
+        <!-- HERO SECTION -->
+        <header class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="hero-title" data-aos="fade-down" data-aos-duration="1000">Үйлену тойға шақыру</div>
+                <div class="hero-names" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="300">Асан<br>&<br>Алия</div>
+                <div class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">Шымкент қаласы</div>
+            </div>
+        </header>
+
+        <!-- INVITATION TEXT -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Қадірлі қонағымыз!</h2>
+            <p class="invitation-text" data-aos="fade-up" data-aos-delay="150">
+                Сіздерді ұлымыз <strong>Асан</strong> мен келініміз <strong>Алияның</strong> 
+                шаңырақ көтеру салтанатына арналған салтанатты ақ тойымыздың қадірлі қонағы болуға шақырамыз!
+            </p>
+            <div class="parents-block" data-aos="zoom-in" data-aos-delay="300">
+                <p>Той иелері:</p>
+                <h3 style="margin-top: 5px; color: var(--accent);">Той иелерінің есімдері</h3>
+            </div>
+        </section>
+
+        <!-- DATE & TIMER -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Той күні</h2>
+            <div class="date-display" data-aos="zoom-in" data-aos-delay="150">
+                КҮН · АЙ · 2026 ЖЫЛ
+            </div>
+            <p style="color: var(--gray);" data-aos="fade-up" data-aos-delay="200">Басталуы: сағат 18:00-де</p>
+
+            <div class="timer" id="countdown" data-aos="fade-up" data-aos-delay="300">
+                <div class="timer-item">
+                    <div class="timer-num" id="days">00</div>
+                    <div class="timer-label">күн</div>
+                </div>
+                <div class="timer-item">
+                    <div class="timer-num" id="hours">00</div>
+                    <div class="timer-label">сағат</div>
+                </div>
+                <div class="timer-item">
+                    <div class="timer-num" id="minutes">00</div>
+                    <div class="timer-label">минут</div>
+                </div>
+                <div class="timer-item">
+                    <div class="timer-num" id="seconds">00</div>
+                    <div class="timer-label">секунд</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Той бағдарламасы</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="100">
+                    <div class="timeline-time">18:00</div>
+                    <div class="timeline-desc">Қонақтардың жиналуы & Фотосессия</div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-time">19:00</div>
+                    <div class="timeline-desc">Жас жұбайлардың салтанатты кіруі</div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="300">
+                    <div class="timeline-time">19:30</div>
+                    <div class="timeline-desc">Беташар & Ақ бата</div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-time">20:00</div>
+                    <div class="timeline-desc">Салтанатты кеш & Шоу-бағдарлама</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VENUE -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Өтетін орны</h2>
+            <div class="venue-card" data-aos="flip-up" data-aos-delay="200">
+                <div class="venue-name">«Құлабар» рестораны</div>
+                <div class="venue-address">Шымкент қаласы, Алиев көшесі, 17</div>
+                <a href="https://2gis.kz/shymkent/search/%D0%A8%D1%8B%D0%BC%D0%BA%D0%B5%D0%BD%D1%82%20%D0%90%D0%BB%D0%B8%D0%B5%D0%B2%2017" target="_blank" class="btn">
+                    📍 2GIS арқылы картадан қарау
+                </a>
+            </div>
+        </section>
+
+        <!-- DRESS CODE -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Дресс-код</h2>
+            <p class="invitation-text" data-aos="fade-up" data-aos-delay="150">
+                Біздің тойымыздың сәнін келтіріп, төмендегі түстік гаммадағы киімдерді таңдасаңыздар қуаныштымыз:
+            </p>
+            <div class="color-palette" data-aos="zoom-in" data-aos-delay="250">
+                <div class="color-circle" style="background: #E8D8C8;" title="Бежевый"></div>
+                <div class="color-circle" style="background: #D4AF37;" title="Алтын"></div>
+                <div class="color-circle" style="background: #FFFFFF; border: 1px solid #ccc;" title="Ақ"></div>
+                <div class="color-circle" style="background: #2C2C2C;" title="Қара"></div>
+            </div>
+        </section>
+
+        <!-- RSVP FORM -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Қатысуды растау</h2>
+            <p style="color: var(--gray); margin-bottom: 20px; font-size: 0.9rem;" data-aos="fade-up" data-aos-delay="100">
+                Тойға келетініңізді алдын ала растауыңызды өтінеміз:
+            </p>
+            <form id="rsvpForm" data-aos="fade-up" data-aos-delay="200">
+                <div class="form-group">
+                    <label>Аты-жөніңіз:</label>
+                    <input type="text" class="form-control" placeholder="Мысалы: Арман мен Айгүл" required id="guestName">
+                </div>
+                <div class="form-group">
+                    <label>Тойға келесіз бе?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="Келемін" checked> Әрине, келемін!
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="Келе алмаймын"> Өкінішке орай...
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Жұбайыңызбен / жұбыңызбен келесіз бе?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="couple" value="Жалғыз"> Жалғыз
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="couple" value="Жұбыммен" checked> Жұбыммен
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="sendToWhatsApp()" style="width: 100%;">
+                    📲 WhatsApp арқылы жауап беру
+                </button>
+            </form>
+        </section>
+
+        <footer>
+            <p>Асан & Алия · 2026</p>
+            <p>Сіздерді асыға күтеміз!</p>
+        </footer>
+
+    </div>
+
+    <!-- AOS JS Library -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 80
+        });
+
+        // Background Music Control
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggleBtn.classList.remove('playing');
+                musicIcon.innerText = '🎵';
+                isPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicToggleBtn.classList.add('playing');
+                    musicIcon.innerText = '⏸️';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log("Audio play blocked by browser policy:", e);
+                });
+            }
+        }
+
+        // Set target wedding date here (YYYY-MM-DD format)
+        const weddingDate = new Date("2026-11-15T18:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<p>Той салтанаты басталды!</p>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function sendToWhatsApp() {
+            const name = document.getElementById("guestName").value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const couple = document.querySelector('input[name="couple"]:checked').value;
+
+            if (!name || !name.trim()) {
+                alert("Өтініш, аты-жөніңізді енгізіңіз!");
+                return;
+            }
+
+            const phone = "77011234567"; 
+            
+            const message = `Сәлеметсіз бе! Мен Асан мен Алияның тойына шақыру алдым.%0A%0A` +
+                            `👤 **Аты-жөнім:** ${encodeURIComponent(name)}%0A` +
+                            `✨ **Қатысуым:** ${encodeURIComponent(attendance)}%0A` +
+                            `👥 **Келу форматы:** ${encodeURIComponent(couple)}`;
+
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
